@@ -1,0 +1,5 @@
+# The site is a public portfolio — everything here is meant to be indexed.
+# The contact API is served from a separate origin (see VITE_API_BASE_URL), so
+# there is nothing to disallow here.
+User-agent: *
+Allow: /

@@ -1,0 +1,6 @@
+# Netlify SPA rewrite.
+#
+# This app uses real URL paths (/projects/shoonya, not /?page=shoonya), so any
+# request for a path that is not a file on disk must return index.html and let
+# React Router resolve it. Without this, refreshing on any sub-page 404s.
+/*    /index.html   200

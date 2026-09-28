@@ -1,0 +1,154 @@
+/* ==========================================================================
+   tokens.css — the entire design system in one place.
+   Change a value here and it propagates everywhere.
+   ========================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------------
+     Colour — light theme is the default.
+     --------------------------------------------------------------------- */
+  --color-bg: #f7f6f2;
+  --color-bg-raised: #ffffff;
+  --color-bg-sunken: #f1f0ea;
+  --color-bg-hover: #fbfaf7;
+  --color-ink: #111111;
+  --color-ink-secondary: #666666;
+  --color-ink-tertiary: #6c6c67;
+  --color-line: #ddddd8;
+  --color-line-strong: #c6c6bf;
+  --color-accent: #1769e0;
+  --color-accent-hover: #1259c2;
+  --color-accent-soft: rgba(23, 105, 224, 0.08);
+  --color-dark: #0d1117;
+  --color-white: #ffffff;
+
+  /* Dark section palette. Applied by .theme-dark. */
+  --dark-bg: #0d1117;
+  --dark-bg-raised: #161b22;
+  --dark-bg-sunken: #0a0e13;
+  --dark-line: rgba(255, 255, 255, 0.1);
+  --dark-line-strong: rgba(255, 255, 255, 0.18);
+  --dark-ink: #f7f6f2;
+  --dark-ink-secondary: #9aa4b2;
+  --dark-ink-tertiary: #7d8794;
+  --dark-accent: #5c9bf5;
+  --dark-accent-hover: #7fb2f8;
+
+  /* Status */
+  --color-success: #1a7f4b;
+  --color-success-soft: rgba(26, 127, 75, 0.08);
+  --color-danger: #c0392f;
+  --color-danger-soft: rgba(192, 57, 47, 0.07);
+  --color-danger-line: rgba(192, 57, 47, 0.3);
+
+  /* ---------------------------------------------------------------------
+     Typography
+     --------------------------------------------------------------------- */
+  --font-display: 'Playfair Display', 'Iowan Old Style', 'Times New Roman', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+
+  /* Fluid type scale. Min at 375px, max at ~1440px. */
+  --fs-display-xl: clamp(2.75rem, 1.35rem + 5.9vw, 6rem);
+  --fs-display-l: clamp(2.25rem, 1.35rem + 3.8vw, 4.25rem);
+  --fs-display-m: clamp(1.75rem, 1.28rem + 2vw, 2.75rem);
+  --fs-display-s: clamp(1.4rem, 1.16rem + 1vw, 1.9rem);
+  --fs-h4: clamp(1.125rem, 1.05rem + 0.32vw, 1.3rem);
+  --fs-lead: clamp(1.0625rem, 1rem + 0.32vw, 1.3rem);
+  --fs-body: 1rem;
+  --fs-sm: 0.875rem;
+  --fs-xs: 0.8125rem;
+  --fs-label: 0.6875rem;
+  --fs-micro: 0.75rem;
+  --fs-annotation: 0.5625rem;
+
+  --lh-display: 1.02;
+  --lh-heading: 1.14;
+  --lh-lead: 1.62;
+  --lh-body: 1.7;
+
+  --ls-display: -0.022em;
+  --ls-heading: -0.014em;
+  --ls-body: 0;
+  --ls-label: 0.18em;
+  --ls-mono-label: 0.08em;
+
+  /* ---------------------------------------------------------------------
+     Spacing
+     --------------------------------------------------------------------- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 5rem;
+  --sp-10: 6.5rem;
+  --sp-11: 8rem;
+
+  --section-y: clamp(4.5rem, 3rem + 6vw, 8.5rem);
+  --section-y-tight: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  --grid-gap: clamp(1.25rem, 0.8rem + 1.4vw, 2rem);
+
+  /* ---------------------------------------------------------------------
+     Layout
+     --------------------------------------------------------------------- */
+  --container-max: 1240px;
+  --container-wide: 1440px;
+  --container-gutter: clamp(1.25rem, 0.6rem + 3.2vw, 3.5rem);
+  --measure: 68ch;
+  --measure-tight: 56ch;
+  --nav-height: 72px;
+
+  /* ---------------------------------------------------------------------
+     Shape
+     --------------------------------------------------------------------- */
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  /* ---------------------------------------------------------------------
+     Elevation — deliberately shallow.
+     --------------------------------------------------------------------- */
+  --shadow-1: 0 1px 2px rgba(17, 17, 17, 0.04);
+  --shadow-2: 0 4px 14px -6px rgba(17, 17, 17, 0.1), 0 1px 3px rgba(17, 17, 17, 0.04);
+  --shadow-3: 0 14px 34px -14px rgba(17, 17, 17, 0.16), 0 2px 6px rgba(17, 17, 17, 0.04);
+  --shadow-accent: 0 6px 20px -8px rgba(23, 105, 224, 0.45);
+
+  /* ---------------------------------------------------------------------
+     Motion — short and professional.
+     --------------------------------------------------------------------- */
+  --dur-fast: 140ms;
+  --dur: 220ms;
+  --dur-slow: 360ms;
+  --dur-reveal: 700ms;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark sections. Everything inside re-resolves against the dark palette. */
+.theme-dark {
+  --color-bg: var(--dark-bg);
+  --color-bg-raised: var(--dark-bg-raised);
+  --color-bg-sunken: var(--dark-bg-sunken);
+  --color-ink: var(--dark-ink);
+  --color-ink-secondary: var(--dark-ink-secondary);
+  --color-ink-tertiary: var(--dark-ink-tertiary);
+  --color-line: var(--dark-line);
+  --color-line-strong: var(--dark-line-strong);
+  --color-accent: var(--dark-accent);
+  --color-accent-hover: var(--dark-accent-hover);
+  --color-accent-soft: rgba(92, 155, 245, 0.12);
+  --shadow-2: 0 4px 14px -6px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-3: 0 14px 34px -14px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-accent: 0 6px 20px -8px rgba(92, 155, 245, 0.4);
+  color: var(--color-ink);
+  background-color: var(--color-bg);
+}

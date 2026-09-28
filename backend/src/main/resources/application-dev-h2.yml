@@ -1,0 +1,43 @@
+# =============================================================================
+# Local development without MySQL.
+#
+# Activate together with the Maven profile that puts H2 on the classpath:
+#
+#   ./mvnw spring-boot:run -Pdev-h2 -Dspring-boot.run.profiles=dev-h2
+#
+# Data is in-memory and is discarded when the process stops. Nothing here is
+# used in production — production always runs against real MySQL.
+# =============================================================================
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:portfolio;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  # JavaMailSender has no account to talk to in this mode; ContactService logs
+  # the message instead of attempting delivery.
+  mail:
+    host: localhost
+    port: 3025
+
+app:
+  contact:
+    mail-enabled: false
+    # Permissive locally so the Vite dev server on any port can call the API.
+    allowed-origins: http://localhost:5173,http://127.0.0.1:5173,http://localhost:4173
+
+management:
+  health:
+    mail:
+      enabled: false
+
+logging:
+  level:
+    com.niranjanhiremath.portfolio: DEBUG

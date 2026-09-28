@@ -1,0 +1,39 @@
+# =============================================================================
+# Local overrides. COPY THIS FILE to application-local.yml and fill it in.
+# application-local.yml is git-ignored and never committed.
+#
+# Most values can be set as plain environment variables instead — see
+# backend/.env.example. This file is for anything you would rather not export.
+# =============================================================================
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/portfolio?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
+    username: root
+    password: your-local-mysql-password
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  mail:
+    host: smtp.example.com
+    port: 587
+    username: your-smtp-username
+    password: your-smtp-app-password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+app:
+  contact:
+    # Turn this on once SMTP above is filled in and you want real mail.
+    mail-enabled: true
+    allowed-origins: http://localhost:5173,http://127.0.0.1:5173
+
+logging:
+  level:
+    com.niranjanhiremath.portfolio: DEBUG

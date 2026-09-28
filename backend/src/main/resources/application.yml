@@ -1,0 +1,146 @@
+# =============================================================================
+# Portfolio backend configuration
+#
+# No secret has a value here. Every credential and endpoint is read from the
+# environment; see backend/.env.example for the full list. Local overrides go
+# in application-local.yml, which is git-ignored.
+# =============================================================================
+
+spring:
+  application:
+    name: portfolio-backend
+
+  # --- MySQL -----------------------------------------------------------------
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:portfolio}?useSSL=${DB_USE_SSL:false}&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8&rewriteBatchedStatements=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      pool-name: portfolio-pool
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 10000
+      # Fail fast on a bad connection rather than hanging a request.
+      initialization-fail-timeout: 10000
+
+  jpa:
+    hibernate:
+      # `update` is convenient locally. For production prefer `validate` and
+      # apply backend/src/main/resources/schema.sql once, by hand.
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
+    show-sql: false
+
+  # --- SMTP (JavaMailSender) --------------------------------------------------
+  # The provider is deliberately not assumed. Fill in MAIL_* for whichever
+  # service you use. With mail disabled, ContactService logs instead of sending.
+  mail:
+    host: ${MAIL_HOST:}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: ${MAIL_STARTTLS_ENABLE:true}
+          ssl:
+            enable: ${MAIL_SSL_ENABLE:false}
+          connectiontimeout: 10000
+          timeout: 10000
+          writetimeout: 10000
+        # Some SMTP providers require an explicit local address to form valid
+        # envelopes. Leave blank to use the default.
+        localhost: ${MAIL_PROPERTIES_LOCALHOST:}
+
+  # --- Jackson ---------------------------------------------------------------
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      # Reject nothing on the way in: unknown keys are ignored so a client
+      # upgrade cannot turn into a hard failure.
+      fail-on-unknown-properties: false
+
+  mvc:
+    # Unknown routes return JSON, not an HTML error page.
+    throw-exception-if-no-handler-found: true
+
+  web:
+    resources:
+      add-mappings: false
+
+# =============================================================================
+# Application settings
+# =============================================================================
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    # Never leak internals through the error response.
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
+    include-exception: false
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+  compression:
+    enabled: true
+    mime-types: application/json,text/html,text/css,application/javascript,image/svg+xml
+    min-response-size: 1024
+  tomcat:
+    max-http-form-post-size: 64KB
+    max-swallow-size: 64KB
+
+app:
+  contact:
+    # Where submissions are delivered. Override with CONTACT_RECEIVER_EMAIL.
+    receiver-email: ${CONTACT_RECEIVER_EMAIL:niranjanhiremath11@gmail.com}
+    # Optional explicit From address (MAIL_FROM). Leave blank to send from the
+    # SMTP account, which is what most providers require.
+    from-address: ${MAIL_FROM:}
+    from-name: ${MAIL_FROM_NAME:Portfolio}
+    subject-prefix: ${CONTACT_SUBJECT_PREFIX:New portfolio message}
+    # false locally, true in production once SMTP is configured.
+    mail-enabled: ${CONTACT_MAIL_ENABLED:false}
+    store-in-database: ${CONTACT_STORE_IN_DATABASE:true}
+    # Anti-abuse: 3 submissions per address per 10 minutes.
+    rate-limit-max-requests: ${CONTACT_RATE_LIMIT_MAX_REQUESTS:3}
+    rate-limit-window-minutes: ${CONTACT_RATE_LIMIT_WINDOW_MINUTES:10}
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+  info:
+    env:
+      enabled: false
+  health:
+    mail:
+      enabled: false
+
+info:
+  app:
+    name: Portfolio API
+    description: REST API for the Niranjan Hiremath portfolio contact form.
+
+logging:
+  level:
+    root: ${LOG_LEVEL_ROOT:INFO}
+    com.niranjanhiremath.portfolio: ${LOG_LEVEL_APP:INFO}
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"

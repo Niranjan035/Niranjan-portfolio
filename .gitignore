@@ -1,0 +1,71 @@
+# ---------- Dependencies ----------
+node_modules/
+.pnp/
+.pnp.js
+
+# ---------- Build output ----------
+dist/
+dist-ssr/
+build/
+target/
+*.class
+*.jar
+*.war
+!.mvn/wrapper/maven-wrapper.jar
+backend/target/
+frontend/dist/
+
+# ---------- Environment / secrets ----------
+.env
+.env.*
+!.env.example
+application-local.yml
+application-local.properties
+application-prod.yml
+application-prod.properties
+secrets/
+
+# ---------- Logs ----------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+backend/logs/
+spring.log
+
+# ---------- IDE ----------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+nbproject/
+nb-configuration/
+.factorypath
+.zed/
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ---------- Assets ----------
+# Portfolio media (About visual, Shoonya photographs, resume PDF) now lives in
+# frontend/public/ and is published. .gitignore must NOT exclude it, or a fresh
+# clone would serve 404s for every image and the resume download. Keep this
+# section free of **/public/media patterns unless you intentionally want to
+# withhold a specific file again.
+
+# ---------- Temp ----------
+.cache/
+.temp/
+tmp/
+coverage/
+*.tsbuildinfo

@@ -1,0 +1,240 @@
+/* ==========================================================================
+   layout.css — container, section shells, grid system, page scaffolding.
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: calc(var(--container-max) + var(--container-gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--container-gutter);
+}
+
+.container--wide {
+  max-width: calc(var(--container-wide) + var(--container-gutter) * 2);
+}
+
+.container--narrow {
+  max-width: calc(880px + var(--container-gutter) * 2);
+}
+
+/* --------------------------------------------------------------------------
+   Sections
+   -------------------------------------------------------------------------- */
+
+.section {
+  padding-block: var(--section-y);
+  position: relative;
+}
+
+.section--tight {
+  padding-block: var(--section-y-tight);
+}
+
+.section--flush-top {
+  padding-top: 0;
+}
+
+.section--flush-bottom {
+  padding-bottom: 0;
+}
+
+.section--sunken {
+  background-color: var(--color-bg-sunken);
+}
+
+.section--dark {
+  background-color: var(--dark-bg);
+  color: var(--dark-ink);
+}
+
+.section--bordered {
+  border-top: 1px solid var(--color-line);
+}
+
+/* Applies the fixed-navbar offset to any section that opens a page. */
+.section--page-top,
+.page-top {
+  padding-top: calc(var(--nav-height) + clamp(3.5rem, 2.4rem + 5vw, 7rem));
+}
+
+/* Horizontal hairline used between stacked editorial sections. */
+.rule {
+  height: 1px;
+  border: 0;
+  background-color: var(--color-line);
+  margin: 0;
+}
+
+.rule--dark {
+  background-color: var(--dark-line);
+}
+
+/* --------------------------------------------------------------------------
+   Section header — the repeated editorial block used across all pages.
+   -------------------------------------------------------------------------- */
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin-bottom: clamp(2.5rem, 1.8rem + 3vw, 4.5rem);
+  max-width: var(--measure);
+}
+
+.section-header--split {
+  max-width: none;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-6);
+  flex-wrap: wrap;
+}
+
+.section-header__title {
+  margin-top: var(--sp-3);
+}
+
+.section-header__body {
+  color: var(--color-ink-secondary);
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+@media (min-width: 900px) {
+  .section-header--wide {
+    max-width: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Grids
+   -------------------------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  gap: var(--grid-gap);
+}
+
+.grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+}
+
+.grid--3 {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+}
+
+.grid--4 {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+}
+
+/* Editorial two-column split: content + aside. */
+.split {
+  display: grid;
+  gap: clamp(2.5rem, 1.6rem + 4vw, 5rem);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .split {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  }
+
+  .split--equal {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .split--aside-left {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+
+  .split__aside {
+    position: sticky;
+    top: calc(var(--nav-height) + var(--sp-6));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   About — decorative figure
+   --------------------------------------------------------------------------
+   A portrait-format photograph placed beside the profile card. It is a plain
+   <figure>/<img> with no <figcaption>: it is not a profile photo and carries
+   no caption or claim about who it depicts.
+
+   The native 736x1282 ratio is preserved with width:100% + height:auto, so the
+   image is never cropped, stretched or squashed. Constrain the WIDTH (not the
+   height) to control how large it appears.
+   -------------------------------------------------------------------------- */
+.about-figure {
+  margin: 0;
+  max-width: min(280px, 100%);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-sunken);
+  overflow: hidden;
+}
+
+.about-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Page scaffolding
+   -------------------------------------------------------------------------- */
+
+.page {
+  padding-top: var(--nav-height);
+}
+
+.page__intro {
+  padding-top: calc(var(--nav-height) + clamp(3rem, 2.2rem + 4vw, 6rem));
+  padding-bottom: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.page__intro-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.page__title {
+  max-width: 18ch;
+}
+
+.page__lede {
+  max-width: 62ch;
+}
+
+/* Bottom breathing room so the last section is not flush against the footer. */
+.page__tail {
+  height: clamp(3rem, 2rem + 4vw, 6rem);
+}
+
+/* --------------------------------------------------------------------------
+   Stack utilities
+   -------------------------------------------------------------------------- */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.stack--1 > * + * { margin-top: var(--sp-1); }
+.stack--2 > * + * { margin-top: var(--sp-2); }
+.stack--3 > * + * { margin-top: var(--sp-3); }
+.stack--4 > * + * { margin-top: var(--sp-4); }
+.stack--5 > * + * { margin-top: var(--sp-5); }
+.stack--6 > * + * { margin-top: var(--sp-6); }
+.stack--7 > * + * { margin-top: var(--sp-7); }
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.cluster--sm { gap: var(--sp-2); }
+.cluster--md { gap: var(--sp-3); }
+.cluster--lg { gap: var(--sp-5); }

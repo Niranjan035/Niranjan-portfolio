@@ -1,0 +1,9 @@
+/* ==========================================================================
+   index.css — single stylesheet entry point.
+   Order matters: tokens resolve before anything that consumes them.
+   ========================================================================== */
+
+@import './tokens.css';
+@import './base.css';
+@import './layout.css';
+@import './components.css';
